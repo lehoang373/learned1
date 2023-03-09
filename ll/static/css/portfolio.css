@@ -1,0 +1,15 @@
+body {
+  padding-top: 4.5rem;
+}
+
+.alert-pre {
+  word-wrap: break-word;
+  word-break: break-all;
+  white-space: pre-wrap;
+}
+
+.page-header {
+    background-color: #006595;
+    margin-top: 0;
+    padding: 20px 20px 20px 40px;
+}

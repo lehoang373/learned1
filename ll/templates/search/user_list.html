@@ -1,0 +1,139 @@
+{% extends 'll/layout.html' %}
+
+{% load widget_tweaks %}
+{% load static %}
+{% block content %}
+
+<style>
+#button1{
+padding:10px;
+background-color:rgb(0,101,149);
+border-radius:10px;
+}
+
+#button2{
+padding:10px;
+background-color:rgb(75,114,29);
+border-radius:10px;
+}
+
+#button3{
+padding:10px;
+background-color:rgb(173,133,5);
+border-radius:10px;
+}
+</style>
+
+
+ <form method="get">
+    <div class="well">
+      <div class="row">
+        <div class="form-group col-sm-4 col-md-3">
+          {{ filter.form.projectname.label_tag }}
+          {% render_field filter.form.projectname class="form-control" %}
+        </div>
+
+        <div class="form-group col-sm-4 col-md-3">
+          {{ filter.form.projectnumber.label_tag }}
+          {% render_field filter.form.projectnumber class="form-control" %}
+        </div>
+
+        <div class="form-group col-sm-4 col-md-3">
+          {{ filter.form.client.label_tag }}
+          {% render_field filter.form.client class="form-control" %}
+        </div>
+
+        <div class="form-group col-sm-4 col-md-3">
+          {{ filter.form.projectlocation.label_tag }}
+          {% render_field filter.form.projectlocation class="form-control" %}
+        </div>
+
+        <div class="form-group col-sm-4 col-md-3">
+          {{ filter.form.description.label_tag }}
+          {% render_field filter.form.description class="form-control" %}
+        </div>
+
+         <div class="form-group col-sm-4 col-md-3">
+          {{ filter.form.division.label_tag }}
+          {% render_field filter.form.division class="form-control" %}
+        </div>
+
+         <div class="form-group col-sm-4 col-md-3">
+          {{ filter.form.marketsector.label_tag }}
+          {% render_field filter.form.marketsector class="form-control" %}
+        </div>
+
+        <div class="form-group col-sm-4 col-md-3">
+          {{ filter.form.discipline.label_tag }}
+          {% render_field filter.form.discipline class="form-control" %}
+        </div>
+
+        <div class="form-group col-sm-4 col-md-3">
+          {{ filter.form.author.label_tag }}
+          {% render_field filter.form.author class="form-control" %}
+        </div>
+
+        <div class="form-group col-sm-4 col-md-3">
+          {{ filter.form.memo.label_tag }}
+          {% render_field filter.form.memo class="form-control" %}
+        </div>
+
+      </div>
+    </div>
+
+    <input type="submit" value="Search" id="button1">
+
+    <input type="button" class="button_active" onclick="location.href='/lesson/create/';" value="Add" id="button2"/>
+
+    <input type="button" class="button_active" onclick="location.href='/export_lessons';" value="Export" id="button3"/>
+  </form>
+
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Project Name</th>
+        <th>Project Number</th>
+        <th>Client</th>
+        <th>Project Location</th>
+        <th>Description</th>
+        <th>Division</th>
+        <th>Market Sector</th>
+        <th>Discipline</th>
+        <th>Author</th>
+        <th>Memo</th>
+        <th>Link File</th>
+        <th colspan="3">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for lesson in filter.qs %}
+        <tr>
+          <td>{{ lesson.projectname }}</td>
+          <td>{{ lesson.projectnumber }}</td>
+          <td>{{ lesson.client }}</td>
+          <td>{{ lesson.projectlocation }}</td>
+          <td>{{ lesson.description }}</td>
+          <td>{{ lesson.division }}</td>
+          <td>{{ lesson.marketsector }}</td>
+          <td>{{ lesson.discipline }}</td>
+          <td>{{ lesson.author }}</td>
+          <td>{{ lesson.memo }}</td>
+          <td>{{ lesson.linkfile }}</td>
+            <td>
+              <a href="{% url 'll:lesson_edit' pk=lesson.pk %}"
+                   class="btn btn-warning">Edit</a>
+            </td>
+
+            {% if request.user.is_staff %}
+            <td>
+              <a href="{% url 'll:lesson_delete' pk=lesson.pk %}"
+                   onclick="return confirm('Are you sure you want to delete?')"
+                   class="btn btn-danger">Delete</a>
+            </td>
+           {% endif %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
